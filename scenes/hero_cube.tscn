@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://btldxu2w7ws82"]
+
+[ext_resource type="Script" path="res://code/HeroCube.cs" id="1_76cot"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_b78em"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qdaa7"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[node name="HeroCube" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("1_76cot")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_b78em")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_qdaa7")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.938276, 0.345888, 0, -0.345888, 0.938276, 0, 2.39701, 3.02846)
