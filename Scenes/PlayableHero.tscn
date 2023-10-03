@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvy2gsecu5iwb"]
+
+[ext_resource type="Script" path="res://Code/CharacterControl/PlayableHeroController.cs" id="1_3frxk"]
+[ext_resource type="PackedScene" uid="uid://rudfkolbb6mv" path="res://Art/player.glb" id="1_4qlyl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4ygr2"]
+radius = 1.01169
+height = 2.11313
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_muq0l"]
+radius = 0.216564
+height = 1.36027
+
+[node name="PlayableHero" type="CharacterBody3D"]
+script = ExtResource("1_3frxk")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="Model" parent="Pivot" instance=ExtResource("1_4qlyl")]
+
+[node name="CollisionShapeBody" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0250726, 0, -0.0313406)
+shape = SubResource("CapsuleShape3D_4ygr2")
+
+[node name="CollisionShapeLeftLeg" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.898365, 0.439249, 1.92002e-08, 0, -4.37114e-08, 1, 0.439249, -0.898365, -3.92688e-08, -0.53279, -0.0192871, 1.3163)
+shape = SubResource("CapsuleShape3D_muq0l")
+
+[node name="CollisionShapeRightLeg" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.915748, -0.401754, -2.91069e-05, 2.76862e-05, -9.34124e-06, 1, -0.401754, -0.915748, 2.56329e-06, 0.528588, -0.019, 1.316)
+shape = SubResource("CapsuleShape3D_muq0l")

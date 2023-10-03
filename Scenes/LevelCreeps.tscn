@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfv8c6d2eph3j"]
+
+[ext_resource type="PackedScene" uid="uid://bvy2gsecu5iwb" path="res://Scenes/PlayableHero.tscn" id="1_gubet"]
+[ext_resource type="PackedScene" uid="uid://c7s47ddotbfnr" path="res://Scenes/Floor.tscn" id="2_o4aly"]
+
+[node name="Level" type="Node3D"]
+
+[node name="PlayableHero" parent="." instance=ExtResource("1_gubet")]
+
+[node name="Floor" parent="." instance=ExtResource("2_o4aly")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.821528, 0.570169, 0, -0.570169, -0.821528, 0, 10.7931, -16.6977)

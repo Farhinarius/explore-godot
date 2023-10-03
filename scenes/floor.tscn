@@ -7,6 +7,7 @@ size = Vector2(30, 30)
 points = PackedVector3Array(15.2381, 0.238095, 15.2381, -15.2381, -0.238095, -15.2381, -15.2381, 0.238095, -15.2381, 15.2381, -0.238095, -15.2381, -15.2381, -0.238095, 15.2381, -15.2381, 0.238095, 15.2381, 15.2381, 0.238095, -15.2381, 15.2381, -0.238095, 15.2381)
 
 [node name="Floor" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_242mq")
