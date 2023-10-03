@@ -1,7 +1,7 @@
 using ExploreGodot.Code;
 using Godot;
 
-namespace ExporeGodot.Code.CharacterControl;
+namespace ExporeGodot.Code.Control;
 
 public partial class PlayableHero : CharacterBody3D
 {

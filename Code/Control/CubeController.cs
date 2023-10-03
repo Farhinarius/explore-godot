@@ -1,6 +1,6 @@
 using Godot;
 
-namespace ExploreGodot.Code.CharacterControl;
+namespace ExploreGodot.Code.Control;
 
 public partial class CubeController : CharacterBody3D
 {

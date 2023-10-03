@@ -1,5 +1,7 @@
 using Godot;
 
+namespace ExploreGodot.Code.Control;
+
 public partial class SpringArmControl : SpringArm3D
 {
     private Vector3 _rotationDegrees = Vector3.Zero;
