@@ -4,46 +4,59 @@ namespace ExploreGodot.Code.Control;
 
 public partial class CubeController : CharacterBody3D
 {
-	private const float SPEED = 5.0f;
-	private const float JUMP_VELOCITY = 4.5f;
+    [Export]
+    private float _speed = 5.0f;
+    [Export]
+    private float _jumpStrength = 4.5f;
+    [Export]
+    private float _gravityForce = 75f;
+    [Export]
+    private SpringArm3D _springArm;
+    [Export]
+    private Node3D _model;
 
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
-	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+    private Vector3 _snapVector = Vector3.Down;
+    private Vector3 _moveDirection = Vector3.Zero;
+    private Vector3 _velocity = Vector3.Zero;
+    private Vector3 _rotation = Vector3.Zero;
 
-	public override void _PhysicsProcess(double delta)
-	{
-		Vector3 velocity = Velocity;
+    public override void _PhysicsProcess(double delta)
+    {
+        _moveDirection.X = Input.GetAxis(InputMapping.HorizontalNegative, InputMapping.HorizontalPositive);
+        _moveDirection.Z = Input.GetAxis(InputMapping.VerticalPositive, InputMapping.VerticalNegative);
+        _moveDirection = _moveDirection.Rotated(Vector3.Up, _springArm.Rotation.Y).Normalized();                // related to camera
 
-		// Add the gravity.
-		if (!IsOnFloor())
-			velocity.Y -= gravity * (float)delta;
+        _velocity.X = _moveDirection.X * _speed;
+        _velocity.Z = _moveDirection.Z * _speed;
+        _velocity.Y -= _gravityForce * (float)delta;
 
-		// Handle Jump.
-		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
-			velocity.Y = JUMP_VELOCITY;
+        var justLanded = IsOnFloor() && _snapVector == Vector3.Zero;
+        var jumping = IsOnFloor() && Input.IsActionJustPressed(InputMapping.Jump);
 
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
+        if (jumping)
+        {
+            _velocity.Y = _jumpStrength;
+            _snapVector = Vector3.Zero;
+        }
+        else if (justLanded)
+        {
+            _snapVector = Vector3.Down;
+        }
 
-		Vector2 inputVector = Input.GetVector(
-			InputMapping.HorizontalNegative, 
-			InputMapping.HorizontalPositive, 
-			InputMapping.VerticalNegative,
-			InputMapping.VerticalPositive);
+        //if (_velocity.Length() > 0.2)
+        //{
+        //    var lookDirection = new Vector2(_velocity.Z, _velocity.X);
+        //    _rotation.X = lookDirection.Angle();
+        //}
 
-		Vector3 movementDirection = (Transform.Basis * new Vector3(inputVector.X, 0, -inputVector.Y)).Normalized();
-		if (movementDirection != Vector3.Zero)
-		{
-			velocity.X = movementDirection.X * SPEED;
-			velocity.Z = movementDirection.Z * SPEED;
-		}
-		else
-		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, SPEED);
-			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, SPEED);
-		}
 
-		Velocity = velocity;
-		MoveAndSlide();
-	}
+        Velocity = _velocity;
+        MoveAndSlide();
+        ApplyFloorSnap();
+    }
+
+    public override void _Process(double delta)
+    {
+        _springArm.Position = Position;
+    }
 }
