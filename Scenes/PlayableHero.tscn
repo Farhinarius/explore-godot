@@ -18,7 +18,6 @@ script = ExtResource("1_gfrwy")
 [node name="Pivot" type="Node3D" parent="." node_paths=PackedStringArray("_playableHeroControl")]
 script = ExtResource("2_1pwa8")
 _playableHeroControl = NodePath("..")
-_rotationSpeed = 2.0
 
 [node name="Model" parent="Pivot" instance=ExtResource("1_4qlyl")]
 

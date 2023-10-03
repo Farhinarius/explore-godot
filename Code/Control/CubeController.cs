@@ -22,8 +22,11 @@ public partial class CubeController : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-        _moveDirection.X = Input.GetAxis(InputMapping.HorizontalNegative, InputMapping.HorizontalPositive);
-        _moveDirection.Z = Input.GetAxis(InputMapping.VerticalPositive, InputMapping.VerticalNegative);
+        _moveDirection.X = Input.GetAxis(InputMapping.LeftCrossHorizontalNegative, InputMapping.LeftCrossHorizontalPositive);
+
+        _moveDirection.Z = Input.GetAxis(InputMapping.LeftCrossVerticalPositive,
+            InputMapping.LeftCrossVerticalNegative);
+
         _moveDirection = _moveDirection.Rotated(Vector3.Up, _springArm.Rotation.Y).Normalized();                // related to camera
 
         _velocity.X = _moveDirection.X * _speed;

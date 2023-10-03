@@ -6,7 +6,7 @@
 [node name="Level" type="Node3D"]
 
 [node name="PlayableHero" parent="." instance=ExtResource("1_gubet")]
-_gravityForce = 0.0
+_jumpStrength = 10.0
 
 [node name="Floor" parent="." instance=ExtResource("2_o4aly")]
 

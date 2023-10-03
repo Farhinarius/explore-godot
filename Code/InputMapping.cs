@@ -5,10 +5,10 @@ namespace ExploreGodot.Code;
 // TODO: Export to common library
 public static class InputMapping
 {
-    public static string VerticalPositive => "VerticalPositive";
-    public static string VerticalNegative => "VerticalNegative";
-    public static string HorizontalNegative => "HorizontalNegative";
-    public static string HorizontalPositive => "HorizontalPositive";
+    public static string LeftCrossVerticalPositive => "LeftCrossVerticalPositive";
+    public static string LeftCrossVerticalNegative => "LeftCrossVerticalNegative";
+    public static string LeftCrossHorizontalNegative => "LeftCrossHorizontalNegative";
+    public static string LeftCrossHorizontalPositive => "LeftCrossHorizontalPositive";
     public static string Jump => "Jump";
 }
 

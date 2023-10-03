@@ -9,13 +9,13 @@ public partial class SetDirection : Node3D
 	private PlayableHeroControl _playableHeroControl;
 
     [Export]
-    private float _rotationSpeed = 0.5f;
+    private float _rotationSpeed = 2f;
 
     private Vector3 _rotation;
 
 	public override void _Process(double delta)
 	{
-        _rotation.Y = Mathf.LerpAngle(Rotation.Y, _playableHeroControl.LookDirection, (float)delta * _rotationSpeed);
+        _rotation.Y = Mathf.LerpAngle(Rotation.Y, _playableHeroControl.LookDirectionAngle, (float)delta * _rotationSpeed);
         Rotation = _rotation;
     }
 }
