@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvy2gsecu5iwb"]
+[gd_scene load_steps=6 format=3 uid="uid://bvy2gsecu5iwb"]
 
 [ext_resource type="PackedScene" uid="uid://rudfkolbb6mv" path="res://Art/player.glb" id="1_4qlyl"]
-[ext_resource type="Script" path="res://Code/Control/PlayableHero.cs" id="1_sj215"]
+[ext_resource type="Script" path="res://Code/Control/PlayableHeroControl.cs" id="1_gfrwy"]
+[ext_resource type="Script" path="res://Code/Control/SetDirection.cs" id="2_1pwa8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4ygr2"]
 radius = 1.01169
@@ -11,11 +12,13 @@ height = 2.11313
 radius = 0.216564
 height = 1.36027
 
-[node name="PlayableHero" type="CharacterBody3D" node_paths=PackedStringArray("_model")]
-script = ExtResource("1_sj215")
-_model = NodePath("Pivot")
+[node name="PlayableHero" type="CharacterBody3D"]
+script = ExtResource("1_gfrwy")
 
-[node name="Pivot" type="Node3D" parent="."]
+[node name="Pivot" type="Node3D" parent="." node_paths=PackedStringArray("_playableHeroControl")]
+script = ExtResource("2_1pwa8")
+_playableHeroControl = NodePath("..")
+_rotationSpeed = 2.0
 
 [node name="Model" parent="Pivot" instance=ExtResource("1_4qlyl")]
 
