@@ -1,11 +1,14 @@
-﻿namespace ExploreGodot.Code;
+﻿using Godot;
 
-public class InputMapping
+namespace ExploreGodot.Code;
+
+// TODO: Export to common library
+public static class InputMapping
 {
-    public string VerticalPositive => "VerticalPositive";
-    public string VerticalNegative => "VerticalNegative";
-    public string HorizontalNegative => "HorizontalNegative";
-    public string HorizontalPositive => "HorizontalPositive";
-    public string Accept => "ui_accept";
+    public static string VerticalPositive => "VerticalPositive";
+    public static string VerticalNegative => "VerticalNegative";
+    public static string HorizontalNegative => "HorizontalNegative";
+    public static string HorizontalPositive => "HorizontalPositive";
+    public static string Jump => "Jump";
 }
 

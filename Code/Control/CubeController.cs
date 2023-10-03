@@ -1,12 +1,11 @@
-using ExploreGodot.Code;
 using Godot;
+
+namespace ExploreGodot.Code.CharacterControl;
 
 public partial class CubeController : CharacterBody3D
 {
 	private const float SPEED = 5.0f;
 	private const float JUMP_VELOCITY = 4.5f;
-
-	private InputMapping _inputMapping = new InputMapping();
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
@@ -27,10 +26,10 @@ public partial class CubeController : CharacterBody3D
 		// As good practice, you should replace UI actions with custom gameplay actions.
 
 		Vector2 inputVector = Input.GetVector(
-			_inputMapping.HorizontalNegative, 
-			_inputMapping.HorizontalPositive, 
-			_inputMapping.VerticalNegative,
-			_inputMapping.VerticalPositive);
+			InputMapping.HorizontalNegative, 
+			InputMapping.HorizontalPositive, 
+			InputMapping.VerticalNegative,
+			InputMapping.VerticalPositive);
 
 		Vector3 movementDirection = (Transform.Basis * new Vector3(inputVector.X, 0, -inputVector.Y)).Normalized();
 		if (movementDirection != Vector3.Zero)

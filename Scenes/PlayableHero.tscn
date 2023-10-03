@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvy2gsecu5iwb"]
+[gd_scene load_steps=6 format=3 uid="uid://bvy2gsecu5iwb"]
 
-[ext_resource type="Script" path="res://Code/CharacterControl/PlayableHeroController.cs" id="1_3frxk"]
 [ext_resource type="PackedScene" uid="uid://rudfkolbb6mv" path="res://Art/player.glb" id="1_4qlyl"]
+[ext_resource type="Script" path="res://Code/Control/PlayableHero.cs" id="1_sj215"]
+[ext_resource type="Script" path="res://Code/Control/SpringArmControl.cs" id="3_f4gvh"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4ygr2"]
 radius = 1.01169
@@ -11,8 +12,9 @@ height = 2.11313
 radius = 0.216564
 height = 1.36027
 
-[node name="PlayableHero" type="CharacterBody3D"]
-script = ExtResource("1_3frxk")
+[node name="PlayableHero" type="CharacterBody3D" node_paths=PackedStringArray("_springArm")]
+script = ExtResource("1_sj215")
+_springArm = NodePath("SpringArm")
 
 [node name="Pivot" type="Node3D" parent="."]
 
@@ -29,3 +31,10 @@ shape = SubResource("CapsuleShape3D_muq0l")
 [node name="CollisionShapeRightLeg" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.915748, -0.401754, -2.91069e-05, 2.76862e-05, -9.34124e-06, 1, -0.401754, -0.915748, 2.56329e-06, 0.528588, -0.019, 1.316)
 shape = SubResource("CapsuleShape3D_muq0l")
+
+[node name="SpringArm" type="SpringArm3D" parent="."]
+spring_length = 7.0
+margin = 0.2
+script = ExtResource("3_f4gvh")
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm"]
