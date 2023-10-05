@@ -60,7 +60,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19)
 curve = SubResource("Curve3D_jb0pj")
 
 [node name="SpawnLocation" type="PathFollow3D" parent="Spawn"]
-transform = Transform3D(-0.00735269, 0, -0.999973, 0, 1, 0, 0.999973, 0, -0.00735269, -12.928, 0, -13.2441)
+transform = Transform3D(-0.00735437, 0, -0.999942, 0, 1, 0, 0.999942, 0, -0.00735437, -12.928, 0, -13.2441)
 
 [node name="MobSpawnTimer" type="Timer" parent="."]
 wait_time = 0.5

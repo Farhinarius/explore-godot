@@ -22,10 +22,15 @@ public partial class SpringArmControl : SpringArm3D
 
     public override void _Input(InputEvent inputEvent)
     {
-        if (inputEvent is InputEventMouseButton mouseInputEvent)
+        RotateCameraByMouseInput(inputEvent);
+    }
+
+    public void RotateCameraByMouseInput(InputEvent inputEvent)
+    {
+        if (inputEvent is InputEventMouseMotion mouseMotionEvent)
         {
-            var horizontalCameraOffsetByMouse = mouseInputEvent.Position.X * _mouseSensivity;
-            var verticalCameraOffsetByMouse = mouseInputEvent.Position.Y * _mouseSensivity;
+            var horizontalCameraOffsetByMouse = mouseMotionEvent.Relative.X * _mouseSensivity;
+            var verticalCameraOffsetByMouse = mouseMotionEvent.Relative.Y * _mouseSensivity;
 
             _position.X = Mathf.Clamp(
                 horizontalCameraOffsetByMouse,
@@ -37,24 +42,6 @@ public partial class SpringArmControl : SpringArm3D
                 _cameraBoundaries.PositiveY);
 
             Position = _position;
-        }
-    }
-
-    public void RotateCameraByMouseInput(InputEvent inputEvent)
-    {
-        if (inputEvent is InputEventMouseButton mouseInputEvent)
-        {
-            _rotationDegrees.X -= mouseInputEvent.Position.Y * _mouseSensivity;
-            _rotationDegrees.X = Mathf.Clamp(
-                _rotationDegrees.X,
-                _cameraBoundaries.NegativeX,
-                _cameraBoundaries.PositiveX);
-            _rotationDegrees.Y = Mathf.Wrap(
-                _rotationDegrees.Y,
-                _cameraBoundaries.NegativeY,
-                _cameraBoundaries.PositiveY);
-
-            RotationDegrees = _rotationDegrees;
         }
     }
 }

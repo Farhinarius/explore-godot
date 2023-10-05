@@ -73,8 +73,8 @@ public partial class PlayableHeroControl : CharacterBody3D
 
 	private void SetLookDirection()
 	{
-		if (_moveDirection != Vector3.Zero)
-		{
+		if (!_moveDirection.IsEqualApprox(Vector3.Zero))
+        {
 			_lookDirection.X = _inputLeftCross.X;
 			_lookDirection.Y = _inputLeftCross.Y;
 		}
