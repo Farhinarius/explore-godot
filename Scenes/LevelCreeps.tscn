@@ -23,30 +23,28 @@ script = ExtResource("1_uyd88")
 MobScene = ExtResource("2_5qfku")
 
 [node name="PlayableHero" parent="." instance=ExtResource("1_gubet")]
-_speed = 7.5
-_jumpStrength = 14.0
 
-[node name="Floor" parent="." instance=ExtResource("2_o4aly")]
+[node name="Ground" parent="." instance=ExtResource("2_o4aly")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.821528, 0.570169, 0, -0.570169, -0.821528, 0, 10.7931, -16.6977)
 
-[node name="Cylinder" type="Node3D" parent="."]
+[node name="Cylinders" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -9)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinder"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinders"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -4)
 mesh = SubResource("CylinderMesh_bcboe")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Cylinder"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Cylinders"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, -4)
 mesh = SubResource("CylinderMesh_bcboe")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinder"]
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinders"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 22)
 mesh = SubResource("CylinderMesh_bcboe")
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cylinder"]
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cylinders"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0, 22)
 mesh = SubResource("CylinderMesh_bcboe")
 
@@ -60,10 +58,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19)
 curve = SubResource("Curve3D_jb0pj")
 
 [node name="SpawnLocation" type="PathFollow3D" parent="Spawn"]
-transform = Transform3D(-0.00735437, 0, -0.999942, 0, 1, 0, 0.999942, 0, -0.00735437, -12.928, 0, -13.2441)
+transform = Transform3D(-0.00735436, 0, -0.999941, 0, 1, 0, 0.999941, 0, -0.00735436, -12.928, 0, -13.2441)
 
 [node name="MobSpawnTimer" type="Timer" parent="."]
-wait_time = 0.5
 autostart = true
 
 [connection signal="timeout" from="MobSpawnTimer" to="." method="OnMobSpawn_TimerTimeout"]

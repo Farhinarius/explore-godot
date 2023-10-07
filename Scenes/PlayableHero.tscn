@@ -13,8 +13,8 @@ radius = 0.216564
 height = 1.36027
 
 [node name="PlayableHero" type="CharacterBody3D"]
+collision_mask = 6
 script = ExtResource("1_gfrwy")
-_jumpStrength = 6.0
 
 [node name="Pivot" type="Node3D" parent="." node_paths=PackedStringArray("_playableHeroControl")]
 script = ExtResource("2_2oylc")

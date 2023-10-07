@@ -6,11 +6,18 @@ namespace ExporeGodot.Code.Enemies;
 public partial class Mob : CharacterBody3D
 {
     [Signal]
-    public delegate void StartedAttackEventHandler(float attackDamage);
+    public delegate void SquashedEventHandler();
     [Export]
     public float MinSpeed { get; set; } = 10;
     [Export]
     public float MaxSpeed { get; set; } = 18;
+
+
+    public void Squash()
+    {
+        EmitSignal(SignalName.Squashed);
+        QueueFree();
+    }
 
     public override void _PhysicsProcess(double delta)
     {
@@ -36,7 +43,7 @@ public partial class Mob : CharacterBody3D
         Velocity = Velocity.Rotated(Vector3.Up, Rotation.Y);
     }
 
-    // We also specified thsi fucntion name in PascalCase ine the editor's connection window
+    // We also specified this fucntion name in PascalCase ine the editor's connection window
     public void OnVisibleOnScreenNotifier3d_ScreenExited()
     {
         QueueFree();

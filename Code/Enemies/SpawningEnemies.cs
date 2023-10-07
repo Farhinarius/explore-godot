@@ -9,7 +9,8 @@ public partial class SpawningEnemies : Node3D
 
     public void OnMobSpawn_TimerTimeout()
     {
-        // Create a new instance of the Mob Scene
+        // Create a new instance of the Mob Scene 
+        // TODO: Debug instantiation process
         var mob = MobScene.Instantiate<Mob>();
 
         // Choose a random locatin on the Spawn Path
@@ -23,6 +24,7 @@ public partial class SpawningEnemies : Node3D
         mob.Initialize(mobSpawnLocation.Position, playerPosition);
 
         // Spawn the mob by adding it to the Main scene.
+        // TODO: debug AddChild method
         AddChild(mob);
     }
 }

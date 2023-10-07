@@ -2,7 +2,7 @@
 
 namespace ExploreGodot.Code;
 
-// TODO: Export to common library
+// TODO: Export to common library in real project
 public static class InputMapping
 {
     public static string LeftCrossVerticalPositive => "LeftCrossVerticalPositive";
