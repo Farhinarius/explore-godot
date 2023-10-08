@@ -10,6 +10,7 @@ size = Vector3(1.80416, 1.05231, 2.09795)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_qv0so")
+MaxSpeed = 14.0
 
 [node name="Pivot" type="Node3D" parent="."]
 

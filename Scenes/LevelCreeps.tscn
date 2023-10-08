@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cfv8c6d2eph3j"]
 
-[ext_resource type="PackedScene" uid="uid://cw1x7pen8hd03" path="res://Scenes/PlayableHero.tscn" id="1_gubet"]
+[ext_resource type="PackedScene" uid="uid://byspxuh32d100" path="res://Scenes/PlayableHero.tscn" id="1_gubet"]
 [ext_resource type="Script" path="res://Code/Enemies/SpawningEnemies.cs" id="1_uyd88"]
 [ext_resource type="PackedScene" uid="uid://uuigerm3ph1l" path="res://Scenes/Mob.tscn" id="2_5qfku"]
 [ext_resource type="PackedScene" uid="uid://c7s47ddotbfnr" path="res://Scenes/Floor.tscn" id="2_o4aly"]

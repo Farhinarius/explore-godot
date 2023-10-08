@@ -60,8 +60,8 @@ public partial class PlayableHero : CharacterBody3D
 
 	private void ApplyJump()
 	{
-		var jumping = IsOnFloor() && _jumpPressed;
-		if (jumping)
+
+		if (IsOnFloor() && _jumpPressed)
 		{
 			_velocity.Y = _jumpStrength;
 		}
@@ -70,14 +70,19 @@ public partial class PlayableHero : CharacterBody3D
 
 	private void BounceFromEnemy()
 	{
+		// Iterate through all collisions that occured this frame
         for (int i = 0; i < GetSlideCollisionCount(); i++)
         {
+			// We get one of the collisions with the player
             KinematicCollision3D collision = GetSlideCollision(i);
 
+			// If the collision is with a mob.
             if (collision.GetCollider() is Mob mob)
             {
+				// We check that we are hitting it from above.
                 if (Vector3.Up.Dot(collision.GetNormal()) > 0.1f)       // TODO: need to check math
                 {
+					// If so, we squash it and bounce;
                     mob.Squash();
                     _velocity.Y = _bounceImpulse;
                     Velocity = _velocity;

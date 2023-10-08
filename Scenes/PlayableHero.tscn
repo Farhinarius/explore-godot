@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cw1x7pen8hd03"]
+[gd_scene load_steps=6 format=3 uid="uid://byspxuh32d100"]
 
 [ext_resource type="PackedScene" uid="uid://rudfkolbb6mv" path="res://Art/player.glb" id="1_4qlyl"]
 [ext_resource type="Script" path="res://Code/Control/PlayableHero.cs" id="1_bqy7v"]
@@ -19,7 +19,7 @@ script = ExtResource("1_bqy7v")
 [node name="Pivot" type="Node3D" parent="." node_paths=PackedStringArray("_playableHeroControl")]
 script = ExtResource("2_2oylc")
 _playableHeroControl = NodePath("..")
-_rotationSpeed = 5.0
+_rotationSpeed = 4.0
 
 [node name="Model" parent="Pivot" instance=ExtResource("1_4qlyl")]
 
