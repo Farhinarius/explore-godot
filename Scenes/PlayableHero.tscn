@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cw1x7pen8hd03"]
 
 [ext_resource type="PackedScene" uid="uid://rudfkolbb6mv" path="res://Art/player.glb" id="1_4qlyl"]
-[ext_resource type="Script" path="res://Code/Control/PlayableHeroControl.cs" id="1_gfrwy"]
+[ext_resource type="Script" path="res://Code/Control/PlayableHero.cs" id="1_bqy7v"]
 [ext_resource type="Script" path="res://Code/Control/RotateTowards.cs" id="2_2oylc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4ygr2"]
@@ -14,7 +14,7 @@ height = 1.36027
 
 [node name="PlayableHero" type="CharacterBody3D"]
 collision_mask = 6
-script = ExtResource("1_gfrwy")
+script = ExtResource("1_bqy7v")
 
 [node name="Pivot" type="Node3D" parent="." node_paths=PackedStringArray("_playableHeroControl")]
 script = ExtResource("2_2oylc")

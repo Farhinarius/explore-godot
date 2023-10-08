@@ -6,7 +6,7 @@ namespace ExploreGodot.Code.Control;
 public partial class RotateTowards : Node3D
 {
 	[Export]
-	private PlayableHeroControl _playableHeroControl;
+	private PlayableHero _playableHeroControl;
 
 	[Export]
 	private float _rotationSpeed = 2f;

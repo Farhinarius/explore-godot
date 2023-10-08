@@ -19,7 +19,7 @@ public partial class SpawningEnemies : Node3D
         // And give it random offset
         mobSpawnLocation.ProgressRatio = GD.Randf();
 
-        Vector3 playerPosition = GetNode<PlayableHeroControl>("PlayableHero").Position;
+        Vector3 playerPosition = GetNode<PlayableHero>("PlayableHero").Position;
         // initilize mob relative to player
         mob.Initialize(mobSpawnLocation.Position, playerPosition);
 

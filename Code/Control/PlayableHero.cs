@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace ExporeGodot.Code.Control;
 
-public partial class PlayableHeroControl : CharacterBody3D
+public partial class PlayableHero : CharacterBody3D
 {
     [Export]
 	private float _speed = 7.5f;
