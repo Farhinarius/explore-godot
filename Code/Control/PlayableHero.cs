@@ -80,7 +80,7 @@ public partial class PlayableHero : CharacterBody3D
             if (collision.GetCollider() is Mob mob)
             {
 				// We check that we are hitting it from above.
-                if (Vector3.Up.Dot(collision.GetNormal()) > 0.1f)       // TODO: need to check math
+                if (Vector3.Up.Dot(collision.GetNormal()) > 0.1f)
                 {
 					// If so, we squash it and bounce;
                     mob.Squash();
