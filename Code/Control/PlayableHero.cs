@@ -24,6 +24,9 @@ public partial class PlayableHero : CharacterBody3D
 
 	public float LookDirectionAngle => _lookDirection.Angle() - (Mathf.Pi / 2);
 
+	[Signal]
+	public delegate void DeadEventHandler();
+
     public override void _PhysicsProcess(double delta)
 	{
 		TranslateInputToMoveDirection();
@@ -97,6 +100,17 @@ public partial class PlayableHero : CharacterBody3D
         {
 			_lookDirection = _inputLeftCross;
 		}
+	}
+
+	private void Die()
+	{
+		EmitSignal(SignalName.Dead);
+		QueueFree();
+	}
+
+	private void OnMobDetector_BodyEntered(Node3D Body)
+	{
+		Die();
 	}
 
 }

@@ -7,7 +7,7 @@ public partial class SpawningEnemies : Node3D
     [Export]
     public PackedScene MobScene { get; set; }
 
-    public void OnMobSpawn_TimerTimeout()
+    private void OnMobSpawn_TimerTimeout()
     {
         // Create a new instance of the Mob Scene 
         // TODO: Debug instantiation process
@@ -26,5 +26,10 @@ public partial class SpawningEnemies : Node3D
         // Spawn the mob by adding it to the Main scene.
         // TODO: debug AddChild method
         AddChild(mob);
+    }
+
+    private void OnPlayableHero_Dead()
+    {
+        GetNode<Timer>("MobSpawnTimer").Stop();
     }
 }
