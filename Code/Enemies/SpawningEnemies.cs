@@ -1,6 +1,7 @@
 using ExporeGodot.Code.Control;
 using ExporeGodot.Code.Enemies;
 using Godot;
+using System;
 
 public partial class SpawningEnemies : Node3D
 {
@@ -26,6 +27,9 @@ public partial class SpawningEnemies : Node3D
         // Spawn the mob by adding it to the Main scene.
         // TODO: debug AddChild method
         AddChild(mob);
+
+        // set callback after enemy is squashed
+        mob.Squashed += GetNode<ScoreLabel>("UserInterface/ScoreLabel").Increase;
     }
 
     private void OnPlayableHero_Dead()

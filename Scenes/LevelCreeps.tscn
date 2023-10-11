@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://cfv8c6d2eph3j"]
+[gd_scene load_steps=11 format=3 uid="uid://cfv8c6d2eph3j"]
 
 [ext_resource type="PackedScene" uid="uid://byspxuh32d100" path="res://Scenes/PlayableHero.tscn" id="1_gubet"]
 [ext_resource type="Script" path="res://Code/Enemies/SpawningEnemies.cs" id="1_uyd88"]
 [ext_resource type="PackedScene" uid="uid://uuigerm3ph1l" path="res://Scenes/Mob.tscn" id="2_5qfku"]
 [ext_resource type="PackedScene" uid="uid://c7s47ddotbfnr" path="res://Scenes/Floor.tscn" id="2_o4aly"]
+[ext_resource type="Theme" uid="uid://bv8k610cbrrtu" path="res://Themes/theme.tres" id="5_m35em"]
+[ext_resource type="Script" path="res://Code/UI/ScoreLabel.cs" id="6_8rqwq"]
+[ext_resource type="Script" path="res://Code/UI/RetryScreen.cs" id="6_tfnyx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6d7na"]
 albedo_color = Color(1, 0.816667, 0, 1)
@@ -63,5 +66,49 @@ transform = Transform3D(-0.00735435, 0, -0.99994, 0, 1, 0, 0.99994, 0, -0.007354
 [node name="MobSpawnTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_m35em")
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 12.0
+offset_right = 76.0
+offset_bottom = 38.0
+text = "Score: 0"
+script = ExtResource("6_8rqwq")
+
+[node name="Retry" type="ColorRect" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.560784)
+script = ExtResource("6_tfnyx")
+
+[node name="Label" type="Label" parent="UserInterface/Retry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -79.0
+offset_top = -12.0
+offset_right = 79.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Prees 'Enter' to retry"
+
 [connection signal="Dead" from="PlayableHero" to="." method="OnPlayableHero_Dead"]
+[connection signal="Dead" from="PlayableHero" to="UserInterface/Retry" method="OnPlayableHero_DeadInUI"]
 [connection signal="timeout" from="MobSpawnTimer" to="." method="OnMobSpawn_TimerTimeout"]
