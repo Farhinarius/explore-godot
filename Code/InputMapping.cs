@@ -1,6 +1,4 @@
-﻿using Godot;
-
-namespace ExploreGodot.Code;
+﻿namespace ExploreGodot.Code;
 
 // TODO: Export to common library in real project
 public static class InputMapping

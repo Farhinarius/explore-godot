@@ -21,7 +21,6 @@ public partial class PlayableHero : CharacterBody3D
     private Vector2 _lookDirection = Vector2.Down;          // initial setup -> look up
     private Vector3 _velocity = Vector3.Zero;
     private bool _jumpPressed;
-    private bool _collisionConditionDetected;
 
     public float LookDirectionAngle => _lookDirection.Angle() - (Mathf.Pi / 2);
 
