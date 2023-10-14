@@ -29,14 +29,15 @@ public partial class PlayableHero : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
-        TranslateInputToMoveDirection();
-        ApplyMovement((float)delta);
+        TranslateInput();
+        ApplyMovement();
+        ApplyGravity((float)delta);
         ApplyJump();
         SetLookDirection();
         BounceFromEnemy();
     }
 
-    private void TranslateInputToMoveDirection()
+    private void TranslateInput()
     {
         _inputLeftCross.X = Input.GetAxis(InputMapping.LeftCrossHorizontalNegative,
                                  InputMapping.LeftCrossHorizontalPositive);
@@ -50,15 +51,19 @@ public partial class PlayableHero : CharacterBody3D
         _jumpPressed = Input.IsActionJustPressed(InputMapping.Jump);
     }
 
-    private void ApplyMovement(float delta)
+    private void ApplyMovement()
     {
         _velocity.X = _moveDirection.X * _speed;
         _velocity.Z = _moveDirection.Z * _speed;
-        if (!IsOnFloor())
-            _velocity.Y -= _gravityForce * delta;
 
         Velocity = _velocity;
         MoveAndSlide();
+    }
+
+    private void ApplyGravity(float delta)
+    {
+        if (!IsOnFloor())
+            _velocity.Y -= _gravityForce * delta;
     }
 
     private void ApplyJump()

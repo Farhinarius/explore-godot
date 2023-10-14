@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://byspxuh32d100"]
+[gd_scene load_steps=9 format=3 uid="uid://byspxuh32d100"]
 
 [ext_resource type="PackedScene" uid="uid://rudfkolbb6mv" path="res://Art/player.glb" id="1_4qlyl"]
 [ext_resource type="Script" path="res://Code/Control/PlayableHero.cs" id="1_bqy7v"]
@@ -8,36 +8,87 @@
 radius = 1.01169
 height = 2.11313
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_muq0l"]
-radius = 0.216564
-height = 1.36027
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_b4g4n"]
 height = 0.202292
 radius = 1.18004
 
+[sub_resource type="Animation" id="Animation_btuyp"]
+resource_name = "float"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.3, 0.7, 1.2),
+"transitions": PackedFloat32Array(0.420449, 2.07, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.65, 0), Vector3(0, 0.35, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.5, 1.2),
+"transitions": PackedFloat32Array(0.420449, 0.44, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.139626, 0, 0), Vector3(-0.15708, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_22418"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uy752"]
+_data = {
+"RESET": SubResource("Animation_22418"),
+"float": SubResource("Animation_btuyp")
+}
+
 [node name="PlayableHero" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 collision_mask = 6
 script = ExtResource("1_bqy7v")
 
 [node name="Pivot" type="Node3D" parent="." node_paths=PackedStringArray("_playableHeroControl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 script = ExtResource("2_2oylc")
 _playableHeroControl = NodePath("..")
-_rotationSpeed = 4.0
 
 [node name="Model" parent="Pivot" instance=ExtResource("1_4qlyl")]
 
 [node name="CollisionShapeBody" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0250726, 0, -0.0313406)
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0.6, 0)
 shape = SubResource("CapsuleShape3D_4ygr2")
-
-[node name="CollisionShapeLeftLeg" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.898365, 0.439249, 1.92002e-08, 0, -4.37114e-08, 1, 0.439249, -0.898365, -3.92688e-08, -0.53279, -0.0192871, 1.3163)
-shape = SubResource("CapsuleShape3D_muq0l")
-
-[node name="CollisionShapeRightLeg" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.915748, -0.401754, -2.91069e-05, 2.76862e-05, -9.34124e-06, 1, -0.401754, -0.915748, 2.56329e-06, 0.528588, -0.019, 1.316)
-shape = SubResource("CapsuleShape3D_muq0l")
 
 [node name="MobDetector" type="Area3D" parent="."]
 collision_layer = 0
@@ -47,5 +98,11 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MobDetector"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.310602, 0)
 shape = SubResource("CylinderShape3D_b4g4n")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "float"
+libraries = {
+"": SubResource("AnimationLibrary_uy752")
+}
 
 [connection signal="body_entered" from="MobDetector" to="." method="OnMobDetector_BodyEntered"]
