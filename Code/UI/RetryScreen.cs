@@ -1,19 +1,10 @@
 using Godot;
-using System.Data.Common;
-using System.Security.Cryptography.X509Certificates;
 
 public partial class RetryScreen : Control
 {
-	public override void _Ready() => HideScreen();
+	public override void _Ready() => Hide();
 
-	private void ShowScreen() => Show();
-
-	private void HideScreen() => Hide();
-
-    private void OnPlayableHero_DeadInUI()
-	{
-		Show();
-	}
+    private void OnPlayableHero_Hit() => Show();
 
     public override void _UnhandledInput(InputEvent inputEvent)
     {

@@ -17,17 +17,20 @@ public partial class PlayableHero : CharacterBody3D
     private float _bounceImpulse { get; set; } = 16;        // Vertical impulse applied to the character upon bouncing over a mob in meters per second
     [Export]
     private AnimationPlayer _animationPlayer;
+    [Export]
+    private Node3D _pivot;
+    [Export]
+    private float _rotationSpeed = 5f;
+    [Signal]
+    public delegate void HitEventHandler();
 
     private Vector2 _inputLeftCross = Vector2.Zero;
     private Vector3 _moveDirection = Vector3.Zero;
     private Vector2 _lookDirection = Vector2.Down;          // initial setup -> look up
-    private Vector3 _velocity = Vector3.Zero;
+    private Vector3 _targetVelocity = Vector3.Zero;
+    private Vector3 _rotation;
+    private float _lookAngle;
     private bool _jumpPressed;
-
-    public float LookDirectionAngle => _lookDirection.Angle() - (Mathf.Pi / 2);
-
-    [Signal]
-    public delegate void DeadEventHandler();
 
     public override void _PhysicsProcess(double delta)
     {
@@ -35,8 +38,10 @@ public partial class PlayableHero : CharacterBody3D
         ApplyMovement();
         ApplyGravity((float)delta);
         ApplyJump();
-        SetLookDirection();
+        SetLooking((float)delta);
         BounceFromEnemy();
+        ApplyAnimationSpeed();
+        ApplyArcJump();
     }
 
     private void TranslateInput()
@@ -55,26 +60,26 @@ public partial class PlayableHero : CharacterBody3D
 
     private void ApplyMovement()
     {
-        _velocity.X = _moveDirection.X * _speed;
-        _velocity.Z = _moveDirection.Z * _speed;
+        _targetVelocity.X = _moveDirection.X * _speed;
+        _targetVelocity.Z = _moveDirection.Z * _speed;
 
-        Velocity = _velocity;
+        Velocity = _targetVelocity;
         MoveAndSlide();
     }
 
     private void ApplyGravity(float delta)
     {
         if (!IsOnFloor())
-            _velocity.Y -= _gravityForce * delta;
+            _targetVelocity.Y -= _gravityForce * delta;
     }
 
     private void ApplyJump()
     {
         if (IsOnFloor() && _jumpPressed)
         {
-            _velocity.Y = _jumpStrength;
+            _targetVelocity.Y = _jumpStrength;
         }
-        Velocity = _velocity;
+        Velocity = _targetVelocity;
     }
 
     private void BounceFromEnemy()
@@ -92,8 +97,8 @@ public partial class PlayableHero : CharacterBody3D
                 if (Vector3.Up.Dot(collision.GetNormal()) > 0.1f)
                 {
                     mob.Squash();
-                    _velocity.Y = _bounceImpulse;
-                    Velocity = _velocity;
+                    _targetVelocity.Y = _bounceImpulse;
+                    Velocity = _targetVelocity;
                     break;
                 }
             }
@@ -101,22 +106,43 @@ public partial class PlayableHero : CharacterBody3D
         }
     }
 
-    private void SetLookDirection()
+    private void SetLooking(float delta)
     {
         if (!_moveDirection.IsEqualApprox(Vector3.Zero))
         {
-            _lookDirection = _inputLeftCross;
+            _lookAngle = _inputLeftCross.Angle() - (Mathf.Pi / 2);
+            _rotation.Y = Mathf.LerpAngle(Rotation.Y, _lookAngle, delta * _rotationSpeed);
+            Rotation = _rotation;
+        }
+
+    }
+
+    private void ApplyAnimationSpeed()
+    {
+        if (!_moveDirection.IsEqualApprox(Vector3.Zero))
+        {
+            _animationPlayer.SpeedScale = 3;
+        }
+        else
+        {
+            _animationPlayer.SpeedScale = 1;
         }
     }
 
-    private void ControlAnimationSpeed()
+    private void ApplyArcJump()
     {
+        // TODO: check what a hell is that?
+        _pivot.Rotation = new Vector3(Mathf.Pi / 6.0f * Velocity.Y / _jumpStrength, _pivot.Rotation.Y, _pivot.Rotation.Z);
 
+        if (IsOnFloor())
+        {
+            _pivot.Rotation = Vector3.Zero;
+        }
     }
 
     private void Die()
     {
-        EmitSignal(SignalName.Dead);
+        EmitSignal(SignalName.Hit);
         QueueFree();
     }
 

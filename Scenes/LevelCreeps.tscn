@@ -21,9 +21,13 @@ _data = {
 }
 point_count = 5
 
-[node name="Level" type="Node3D"]
+[node name="Level" type="Node3D" node_paths=PackedStringArray("_playableHero", "_spawnPath", "_timer", "_scoreLabel")]
 script = ExtResource("1_uyd88")
 MobScene = ExtResource("2_5qfku")
+_playableHero = NodePath("PlayableHero")
+_spawnPath = NodePath("Spawn/SpawnLocation")
+_timer = NodePath("MobSpawnTimer")
+_scoreLabel = NodePath("UserInterface/ScoreLabel")
 
 [node name="PlayableHero" parent="." instance=ExtResource("1_gubet")]
 
@@ -61,7 +65,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 19)
 curve = SubResource("Curve3D_jb0pj")
 
 [node name="SpawnLocation" type="PathFollow3D" parent="Spawn"]
-transform = Transform3D(-0.00735434, 0, -0.999938, 0, 1, 0, 0.999938, 0, -0.00735434, -12.928, 0, -13.2441)
+transform = Transform3D(-0.00735433, 0, -0.999937, 0, 1, 0, 0.999937, 0, -0.00735433, -12.928, 0, -13.2441)
 
 [node name="MobSpawnTimer" type="Timer" parent="."]
 autostart = true
@@ -84,7 +88,7 @@ offset_bottom = 38.0
 text = "Score: 0"
 script = ExtResource("6_8rqwq")
 
-[node name="Retry" type="ColorRect" parent="UserInterface"]
+[node name="RetryScreen" type="ColorRect" parent="UserInterface"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,7 +98,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.560784)
 script = ExtResource("6_tfnyx")
 
-[node name="Label" type="Label" parent="UserInterface/Retry"]
+[node name="Label" type="Label" parent="UserInterface/RetryScreen"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -109,6 +113,6 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Prees 'Enter' to retry"
 
-[connection signal="Dead" from="PlayableHero" to="." method="OnPlayableHero_Dead"]
-[connection signal="Dead" from="PlayableHero" to="UserInterface/Retry" method="OnPlayableHero_DeadInUI"]
+[connection signal="Hit" from="PlayableHero" to="." method="OnPlayableHero_Hit"]
+[connection signal="Hit" from="PlayableHero" to="UserInterface/RetryScreen" method="OnPlayableHero_Hit"]
 [connection signal="timeout" from="MobSpawnTimer" to="." method="OnMobSpawn_TimerTimeout"]

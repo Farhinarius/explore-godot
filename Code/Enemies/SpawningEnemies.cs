@@ -6,6 +6,14 @@ public partial class SpawningEnemies : Node3D
 {
     [Export]
     public PackedScene MobScene { get; set; }
+    [Export]
+    private PlayableHero _playableHero;
+    [Export]
+    private PathFollow3D _spawnPath;
+    [Export]
+    private Timer _timer;
+    [Export]
+    private ScoreLabel _scoreLabel;
 
     private void OnMobSpawn_TimerTimeout()
     {
@@ -15,11 +23,11 @@ public partial class SpawningEnemies : Node3D
 
         // Choose a random locatin on the Spawn Path
         // We store the reference to the SpawnLocation node
-        var mobSpawnLocation = GetNode<PathFollow3D>("Spawn/SpawnLocation");
+        var mobSpawnLocation = _spawnPath;
         // And give it random offset
         mobSpawnLocation.ProgressRatio = GD.Randf();
 
-        Vector3 playerPosition = GetNode<PlayableHero>("PlayableHero").Position;
+        Vector3 playerPosition = _playableHero.Position;
         // initilize mob relative to player
         mob.Initialize(mobSpawnLocation.Position, playerPosition);
 
@@ -28,11 +36,11 @@ public partial class SpawningEnemies : Node3D
         AddChild(mob);
 
         // set callback after enemy is squashed
-        mob.Squashed += GetNode<ScoreLabel>("UserInterface/ScoreLabel").Increase;
+        mob.Squashed += _scoreLabel.Increase;
     }
 
-    private void OnPlayableHero_Dead()
+    private void OnPlayableHero_Hit()
     {
-        GetNode<Timer>("MobSpawnTimer").Stop();
+        _timer.Stop();
     }
 }

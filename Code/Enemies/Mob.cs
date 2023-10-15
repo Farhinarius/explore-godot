@@ -7,10 +7,11 @@ public partial class Mob : CharacterBody3D
     [Signal]
     public delegate void SquashedEventHandler();
     [Export]
-    public float MinSpeed { get; set; } = 10;
+    private float _minSpeed { get; set; } = 10;
     [Export]
-    public float MaxSpeed { get; set; } = 18;
-
+    private float _maxSpeed { get; set; } = 14;
+    [Export]
+    private AnimationPlayer _animationPlayer;
 
     public void Squash()
     {
@@ -34,12 +35,14 @@ public partial class Mob : CharacterBody3D
         RotateY((float)GD.RandRange(-Mathf.Pi / 4f, Mathf.Pi / 4f));
 
         // We calculate a random speed (integer).
-        var randomSpeed = (float) GD.RandRange(MinSpeed, MaxSpeed);
+        var randomSpeed = (float) GD.RandRange(_minSpeed, _maxSpeed);
         // We calculate a forward velocity that respresents the speed
         Velocity = Vector3.Forward * randomSpeed;
         // We then rotate the velocity vector based on the mob's Y rotation
         // in order to move in the direction the mob is looking
         Velocity = Velocity.Rotated(Vector3.Up, Rotation.Y);
+        // Set up animation player playback speed
+        _animationPlayer.SpeedScale = randomSpeed / _minSpeed;
     }
 
     // We also specified this fucntion name in PascalCase ine the editor's connection window
