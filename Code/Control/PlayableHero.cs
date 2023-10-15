@@ -15,6 +15,8 @@ public partial class PlayableHero : CharacterBody3D
     private float _gravityForce = 75f;
     [Export]
     private float _bounceImpulse { get; set; } = 16;        // Vertical impulse applied to the character upon bouncing over a mob in meters per second
+    [Export]
+    private AnimationPlayer _animationPlayer;
 
     private Vector2 _inputLeftCross = Vector2.Zero;
     private Vector3 _moveDirection = Vector3.Zero;
@@ -89,8 +91,6 @@ public partial class PlayableHero : CharacterBody3D
                 // We check that we are hitting it from above.
                 if (Vector3.Up.Dot(collision.GetNormal()) > 0.1f)
                 {
-                    Debug.WriteLine($"Squashed {mob.GetInstanceId()}");
-                    // If so, we squash it and bounce;
                     mob.Squash();
                     _velocity.Y = _bounceImpulse;
                     Velocity = _velocity;
@@ -107,6 +107,11 @@ public partial class PlayableHero : CharacterBody3D
         {
             _lookDirection = _inputLeftCross;
         }
+    }
+
+    private void ControlAnimationSpeed()
+    {
+
     }
 
     private void Die()

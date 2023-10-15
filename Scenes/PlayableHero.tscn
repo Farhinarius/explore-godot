@@ -1,52 +1,52 @@
-[gd_scene load_steps=9 format=3 uid="uid://byspxuh32d100"]
+[gd_scene load_steps=8 format=3 uid="uid://byspxuh32d100"]
 
 [ext_resource type="PackedScene" uid="uid://rudfkolbb6mv" path="res://Art/player.glb" id="1_4qlyl"]
 [ext_resource type="Script" path="res://Code/Control/PlayableHero.cs" id="1_bqy7v"]
-[ext_resource type="Script" path="res://Code/Control/RotateTowards.cs" id="2_2oylc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4ygr2"]
-radius = 1.01169
-height = 2.11313
+radius = 1.04948
+height = 2.10129
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_b4g4n"]
 height = 0.202292
 radius = 1.18004
 
-[sub_resource type="Animation" id="Animation_btuyp"]
+[sub_resource type="Animation" id="Animation_jippd"]
 resource_name = "float"
 length = 1.2
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath("Pivot/Character:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0.3, 0.7, 1.2),
-"transitions": PackedFloat32Array(0.420449, 2.07, 1),
+"transitions": PackedFloat32Array(0.42, 2.07053, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0, 0.65, 0), Vector3(0, 0.35, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
+tracks/1/path = NodePath("Pivot/Character:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0.1, 0.5, 1.2),
-"transitions": PackedFloat32Array(0.420449, 0.44, 1),
+"transitions": PackedFloat32Array(0.42, 0.44, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(0.139626, 0, 0), Vector3(-0.15708, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_22418"]
+[sub_resource type="Animation" id="Animation_53i25"]
 length = 0.001
+loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath("Pivot/Character:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -58,7 +58,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
+tracks/1/path = NodePath("Pivot/Character:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -68,26 +68,22 @@ tracks/1/keys = {
 "values": [Vector3(0, 0, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_uy752"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0gxqj"]
 _data = {
-"RESET": SubResource("Animation_22418"),
-"float": SubResource("Animation_btuyp")
+"RESET": SubResource("Animation_53i25"),
+"float": SubResource("Animation_jippd")
 }
 
 [node name="PlayableHero" type="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 collision_mask = 6
 script = ExtResource("1_bqy7v")
 
-[node name="Pivot" type="Node3D" parent="." node_paths=PackedStringArray("_playableHeroControl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
-script = ExtResource("2_2oylc")
-_playableHeroControl = NodePath("..")
+[node name="Pivot" type="Node3D" parent="."]
 
-[node name="Model" parent="Pivot" instance=ExtResource("1_4qlyl")]
+[node name="Character" parent="Pivot" instance=ExtResource("1_4qlyl")]
 
 [node name="CollisionShapeBody" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0.6, 0)
+transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_4ygr2")
 
 [node name="MobDetector" type="Area3D" parent="."]
@@ -102,7 +98,7 @@ shape = SubResource("CylinderShape3D_b4g4n")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "float"
 libraries = {
-"": SubResource("AnimationLibrary_uy752")
+"": SubResource("AnimationLibrary_0gxqj")
 }
 
 [connection signal="body_entered" from="MobDetector" to="." method="OnMobDetector_BodyEntered"]
