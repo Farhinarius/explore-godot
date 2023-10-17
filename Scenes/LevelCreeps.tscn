@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cfv8c6d2eph3j"]
+[gd_scene load_steps=12 format=3 uid="uid://cfv8c6d2eph3j"]
 
 [ext_resource type="PackedScene" uid="uid://byspxuh32d100" path="res://Scenes/PlayableHero.tscn" id="1_gubet"]
 [ext_resource type="Script" path="res://Code/Enemies/SpawningEnemies.cs" id="1_uyd88"]
@@ -7,6 +7,7 @@
 [ext_resource type="Theme" uid="uid://bv8k610cbrrtu" path="res://Themes/theme.tres" id="5_m35em"]
 [ext_resource type="Script" path="res://Code/UI/ScoreLabel.cs" id="6_8rqwq"]
 [ext_resource type="Script" path="res://Code/UI/RetryScreen.cs" id="6_tfnyx"]
+[ext_resource type="PackedScene" uid="uid://dnshkd5s4g555" path="res://Scenes/InputHandler.tscn" id="8_ut2lv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6d7na"]
 albedo_color = Color(1, 0.816667, 0, 1)
@@ -29,7 +30,8 @@ _spawnPath = NodePath("Spawn/SpawnLocation")
 _timer = NodePath("MobSpawnTimer")
 _scoreLabel = NodePath("UserInterface/ScoreLabel")
 
-[node name="PlayableHero" parent="." instance=ExtResource("1_gubet")]
+[node name="PlayableHero" parent="." node_paths=PackedStringArray("_input") instance=ExtResource("1_gubet")]
+_input = NodePath("../InputHandler")
 
 [node name="Ground" parent="." instance=ExtResource("2_o4aly")]
 
@@ -112,6 +114,8 @@ offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Prees 'Enter' to retry"
+
+[node name="InputHandler" parent="." instance=ExtResource("8_ut2lv")]
 
 [connection signal="Hit" from="PlayableHero" to="." method="OnPlayableHero_Hit"]
 [connection signal="Hit" from="PlayableHero" to="UserInterface/RetryScreen" method="OnPlayableHero_Hit"]

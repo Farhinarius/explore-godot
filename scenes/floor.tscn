@@ -5,10 +5,10 @@ albedo_color = Color(0.211765, 0.431373, 1, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_242mq"]
 material = SubResource("StandardMaterial3D_tlm8f")
-size = Vector2(30, 30)
+size = Vector2(50, 50)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7fy7b"]
-points = PackedVector3Array(30.4762, 0.476191, 30.4762, -30.4762, -0.476191, -30.4762, -30.4762, 0.476191, -30.4762, 30.4762, -0.476191, -30.4762, -30.4762, -0.476191, 30.4762, -30.4762, 0.476191, 30.4762, 30.4762, 0.476191, -30.4762, 30.4762, -0.476191, 30.4762)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_e1gkp"]
+points = PackedVector3Array(-25, 0, -25, -25, 0, 25, 25, 0, -25, 25, 0, 25)
 
 [node name="Floor" type="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -19,4 +19,4 @@ collision_mask = 0
 mesh = SubResource("PlaneMesh_242mq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_7fy7b")
+shape = SubResource("ConvexPolygonShape3D_e1gkp")

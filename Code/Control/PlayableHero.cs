@@ -1,8 +1,8 @@
-namespace ExporeGodot.Code.Control;
-
-using ExploreGodot.Code.Input;
+using ExploreGodot.Code.InputTranslation;
 using ExporeGodot.Code.Enemies;
 using Godot;
+
+namespace ExporeGodot.Code.Control;
 
 public partial class PlayableHero : CharacterBody3D
 {
@@ -11,7 +11,7 @@ public partial class PlayableHero : CharacterBody3D
     [Export]
     private float _jumpStrength = 16f;
     [Export]
-    private float _gravityForce = 75f;
+    private float _fallAcceleration = 75f;
     [Export]
     private float _bounceImpulse { get; set; } = 16;        // Vertical impulse applied to the character upon bouncing over a mob in meters per second
     [Export]
@@ -22,63 +22,53 @@ public partial class PlayableHero : CharacterBody3D
     private float _rotationSpeed = 5f;
     [Signal]
     public delegate void HitEventHandler();
+    [Export]
+    private InputHandler _input;
 
-    private Vector2 _inputLeftCross = Vector2.Zero;
     private Vector3 _moveDirection = Vector3.Zero;
-    private Vector2 _lookDirection = Vector2.Down;          // initial setup -> look up
     private Vector3 _targetVelocity = Vector3.Zero;
     private Vector3 _rotation;
     private float _lookAngle;
-    private bool _jumpPressed;
 
     public override void _PhysicsProcess(double delta)
     {
-        TranslateInput();
-        ApplyMovement();
-        ApplyGravity((float)delta);
-        ApplyJump();
-        SetLooking((float)delta);
+        GetMovementDirection();
+        GetMovementVelocity();
+        GetGravityVelocity((float)delta);
+        GetJumpVelocity();
+        RotateTowardsMoveDirection((float)delta);
         BounceFromEnemy();
-        ApplyAnimationSpeed();
+        SetAnimationSpeed();
+
+        ApplyTargetVelocity();
         ApplyArcJump();
     }
 
-    private void TranslateInput()
+    private void GetMovementDirection()
     {
-        _inputLeftCross.X = Input.GetAxis(InputMapping.LeftCrossHorizontalNegative,
-                                 InputMapping.LeftCrossHorizontalPositive);
-        _inputLeftCross.Y = Input.GetAxis(InputMapping.LeftCrossVerticalNegative,
-                                 InputMapping.LeftCrossVerticalPositive);
-
-        _moveDirection.X = _inputLeftCross.X;
-        _moveDirection.Z = -_inputLeftCross.Y;
+        _moveDirection.X = _input.LeftCross.X;
+        _moveDirection.Z = -_input.LeftCross.Y;
         _moveDirection = _moveDirection.Normalized();
-
-        _jumpPressed = Input.IsActionJustPressed(InputMapping.Confirm);
     }
 
-    private void ApplyMovement()
+    private void GetMovementVelocity()
     {
         _targetVelocity.X = _moveDirection.X * _speed;
         _targetVelocity.Z = _moveDirection.Z * _speed;
-
-        Velocity = _targetVelocity;
-        MoveAndSlide();
     }
 
-    private void ApplyGravity(float delta)
+    private void GetGravityVelocity(float delta)
     {
         if (!IsOnFloor())
-            _targetVelocity.Y -= _gravityForce * delta;
+            _targetVelocity.Y -= _fallAcceleration * delta;
     }
 
-    private void ApplyJump()
+    private void GetJumpVelocity()
     {
-        if (IsOnFloor() && _jumpPressed)
+        if (IsOnFloor() && _input.ConfirmPressed)
         {
             _targetVelocity.Y = _jumpStrength;
         }
-        Velocity = _targetVelocity;
     }
 
     private void BounceFromEnemy()
@@ -97,7 +87,6 @@ public partial class PlayableHero : CharacterBody3D
                 {
                     mob.Squash();
                     _targetVelocity.Y = _bounceImpulse;
-                    Velocity = _targetVelocity;
                     break;
                 }
             }
@@ -105,18 +94,17 @@ public partial class PlayableHero : CharacterBody3D
         }
     }
 
-    private void SetLooking(float delta)
+    private void RotateTowardsMoveDirection(float delta)
     {
         if (!_moveDirection.IsEqualApprox(Vector3.Zero))
         {
-            _lookAngle = _inputLeftCross.Angle() - (Mathf.Pi / 2);
+            _lookAngle = _input.LeftCross.Angle() - (Mathf.Pi / 2);
             _rotation.Y = Mathf.LerpAngle(Rotation.Y, _lookAngle, delta * _rotationSpeed);
             Rotation = _rotation;
         }
-
     }
 
-    private void ApplyAnimationSpeed()
+    private void SetAnimationSpeed()
     {
         if (!_moveDirection.IsEqualApprox(Vector3.Zero))
         {
@@ -126,6 +114,11 @@ public partial class PlayableHero : CharacterBody3D
         {
             _animationPlayer.SpeedScale = 1;
         }
+    }
+    private void ApplyTargetVelocity()
+    {
+        Velocity = _targetVelocity;
+        MoveAndSlide();
     }
 
     private void ApplyArcJump()

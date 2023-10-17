@@ -1,14 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://dapodrvid1rcg"]
+[gd_scene load_steps=4 format=3 uid="uid://dapodrvid1rcg"]
 
 [ext_resource type="PackedScene" uid="uid://btldxu2w7ws82" path="res://Scenes/Cube.tscn" id="1_rxvjp"]
-[ext_resource type="PackedScene" uid="uid://c7s47ddotbfnr" path="res://Scenes/Floor.tscn" id="2_yug5y"]
+[ext_resource type="PackedScene" uid="uid://cfcgi7uyi6vd6" path="res://Scenes/Floor2.tscn" id="3_4gama"]
+[ext_resource type="PackedScene" uid="uid://dnshkd5s4g555" path="res://Scenes/InputHandler.tscn" id="3_lydqw"]
 
 [node name="Level" type="Node3D"]
 
-[node name="HeroCube" parent="." instance=ExtResource("1_rxvjp")]
+[node name="HeroCube" parent="." node_paths=PackedStringArray("_input") instance=ExtResource("1_rxvjp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0372314, 0.361328, -0.0754395)
+_input = NodePath("../InputHandler")
 
-[node name="Floor" parent="." instance=ExtResource("2_yug5y")]
+[node name="Floor2" parent="." instance=ExtResource("3_4gama")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.821528, 0.570169, 0, -0.570169, -0.821528, 0, 10.7931, -16.6977)
+
+[node name="InputHandler" parent="." instance=ExtResource("3_lydqw")]
