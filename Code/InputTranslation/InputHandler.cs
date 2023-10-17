@@ -4,15 +4,14 @@ namespace ExploreGodot.Code.InputTranslation;
 
 public partial class InputHandler : Node
 {
-    private Vector2 _leftCross;
-    public Vector2 LeftCross => _leftCross;
+    public Vector2 LeftCross { get; private set; }
     public bool ConfirmPressed { get; private set; }
 
     public override void _Process(double delta)
     {
-        _leftCross.X = Input.GetAxis(InputMapping.LeftCrossHorizontalNegative, 
-            InputMapping.LeftCrossHorizontalPositive);
-        _leftCross.Y = Input.GetAxis(InputMapping.LeftCrossVerticalNegative, 
+        LeftCross = Input.GetVector(InputMapping.LeftCrossHorizontalNegative,
+            InputMapping.LeftCrossHorizontalPositive,
+            InputMapping.LeftCrossVerticalNegative,
             InputMapping.LeftCrossVerticalPositive);
 
         ConfirmPressed = Input.IsActionJustPressed(InputMapping.Confirm);

@@ -7,7 +7,7 @@ namespace ExploreGodot.Code.Control;
 public partial class CameraRotation : Node3D
 {
     [Export]
-    private float _mouseSensivity = 0.01f;
+    private float _mouseSensivity = 0.005f;
 
     private Vector3 _rotationDegrees = Vector3.Zero;
     private Vector3 _cameraTargetRotation;
@@ -29,15 +29,11 @@ public partial class CameraRotation : Node3D
     {   
         if (inputEvent is InputEventMouseMotion mouseMotionEvent)
         {
-            var horizontalCameraOffsetRotation = mouseMotionEvent.Relative.X * _mouseSensivity;
-            var verticalCameraOffsetRotation = mouseMotionEvent.Relative.Y * _mouseSensivity;
+            var rotationX = mouseMotionEvent.Relative.X * _mouseSensivity;
+            var rotationY = mouseMotionEvent.Relative.Y * _mouseSensivity;
 
-            _cameraTargetRotation = Rotation;
-            
-            _cameraTargetRotation.X += verticalCameraOffsetRotation;
-            _cameraTargetRotation.Y += verticalCameraOffsetRotation;
-
-            Rotation = _cameraTargetRotation;
+            RotateObjectLocal(Vector3.Up, rotationX);
+            RotateObjectLocal(Vector3.Right, rotationY);
         }
     }
 }
