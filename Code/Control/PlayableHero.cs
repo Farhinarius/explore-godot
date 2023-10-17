@@ -1,9 +1,8 @@
-using ExploreGodot.Code;
+namespace ExporeGodot.Code.Control;
+
+using ExploreGodot.Code.Input;
 using ExporeGodot.Code.Enemies;
 using Godot;
-using System.Diagnostics;
-
-namespace ExporeGodot.Code.Control;
 
 public partial class PlayableHero : CharacterBody3D
 {
@@ -55,7 +54,7 @@ public partial class PlayableHero : CharacterBody3D
         _moveDirection.Z = -_inputLeftCross.Y;
         _moveDirection = _moveDirection.Normalized();
 
-        _jumpPressed = Input.IsActionJustPressed(InputMapping.Jump);
+        _jumpPressed = Input.IsActionJustPressed(InputMapping.Confirm);
     }
 
     private void ApplyMovement()
