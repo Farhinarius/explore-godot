@@ -1,6 +1,8 @@
-using ExporeGodot.Code.Control;
-using ExporeGodot.Code.Enemies;
+using Code.Control;
+using Code.UI;
 using Godot;
+
+namespace Code.Enemies;
 
 public partial class SpawningEnemies : Node3D
 {

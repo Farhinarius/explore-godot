@@ -1,8 +1,8 @@
-using ExploreGodot.Code.InputTranslation;
-using ExporeGodot.Code.Enemies;
+using Code.Input;
+using Code.Enemies;
 using Godot;
 
-namespace ExporeGodot.Code.Control;
+namespace Code.Control;
 
 public partial class PlayableHero : CharacterBody3D
 {

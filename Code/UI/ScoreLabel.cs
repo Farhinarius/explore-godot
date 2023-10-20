@@ -1,5 +1,6 @@
 using Godot;
-using System;
+
+namespace Code.UI;
 
 public partial class ScoreLabel : Label
 {

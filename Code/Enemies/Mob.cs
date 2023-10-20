@@ -1,6 +1,6 @@
 using Godot;
 
-namespace ExporeGodot.Code.Enemies;
+namespace Code.Enemies;
 
 public partial class Mob : CharacterBody3D
 {

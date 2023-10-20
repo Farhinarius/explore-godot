@@ -1,4 +1,4 @@
-﻿namespace ExploreGodot.Code.InputTranslation;
+﻿namespace Code.Input;
 
 public static class InputMapping
 {
@@ -7,5 +7,6 @@ public static class InputMapping
     public static string LeftCrossVerticalNegative => "LeftCrossVerticalNegative";
     public static string LeftCrossVerticalPositive => "LeftCrossVerticalPositive";
     public static string Confirm => "Confirm";
+    public static string Retry => "Retry";
 }
 

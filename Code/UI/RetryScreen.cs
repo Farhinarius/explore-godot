@@ -1,6 +1,9 @@
+using Code.Input;
 using Godot;
 
-public partial class RetryScreen : Control
+namespace Code.UI;
+
+public partial class RetryScreen : Godot.Control
 {
 	public override void _Ready() => Hide();
 
@@ -8,7 +11,7 @@ public partial class RetryScreen : Control
 
     public override void _UnhandledInput(InputEvent inputEvent)
     {
-        if (inputEvent.IsActionPressed("ui_accept") && Visible)
+        if (inputEvent.IsActionPressed(InputMapping.Retry) && Visible)
         {
             GetTree().ReloadCurrentScene();
         }
